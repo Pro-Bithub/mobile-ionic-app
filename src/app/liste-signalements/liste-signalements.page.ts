@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { IonicModule, NavController } from '@ionic/angular';
+import { AlertController, IonicModule, NavController } from '@ionic/angular';
 
 import { ProductService } from '../product/product.service';
 import { PermissionService } from '../permission.service';
@@ -63,7 +63,7 @@ export class ListeSignalementsPage implements OnInit {
   private changePageLimit(limit: any): void {
     this.currentPageLimit = parseInt(limit, 10);
   }
-  constructor(  private permissionService: PermissionService,  private productService: ProductService, private router: Router) {
+  constructor( private alertController: AlertController, private permissionService: PermissionService,  private productService: ProductService, private router: Router) {
     this.columns = [
       { name: 'datePanne' },
       { name: 'numSerie' },
@@ -92,7 +92,23 @@ export class ListeSignalementsPage implements OnInit {
     
    
   }
+  async afficheAlert(row:any){
 
+    const alert = await this.alertController.create({
+      header: 'Panne details',
+      subHeader: 'Détails de la panne sélectionnée',
+      message: "Date Panne: " + row.datePanne + "\n" +
+               "Num Serie: " + row.numSerie + "\n" +
+               "Type Panne: " + row.typePanne + "\n" +
+               "Réparé: " + row.repare + "\n" +
+               "Nom Produit: " + row.nomProduit + "\n" +
+               "Observations: " + row.observations,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+
+}
 
   ngOnInit() {
     this.hasPermission=this.permissionService.hasPermission()
