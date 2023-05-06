@@ -1,0 +1,59 @@
+
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Produit</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-item-group>
+    <ion-item-divider style="--background: #ff6600; --color: #fff;">
+      <ion-label>
+        Produit - Sous catégories
+      </ion-label>
+    </ion-item-divider>
+  
+    <ion-item-sliding>
+      <ion-item>
+        <ion-label>
+          <ion-item>
+            <ion-select justify="start" (ionChange)="filterProducts($event)"   placeholder="Sélectionnez votre sous catégories">
+             
+              <ion-select-option *ngFor="let sousCategorie of sousCategories" [value]="sousCategorie.name">{{ sousCategorie.name }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-label>
+      </ion-item>
+      <ion-item-options>
+        <ion-item-option>
+          Favorite
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  
+   
+  </ion-item-group>
+  
+
+
+  <ion-grid>
+    <ion-row  >
+    
+      <ion-col *ngFor="let sousCategorie of sousCategories | filterProducts:selectedFilter" size="4"> <ion-card>
+        <img  src="assets/product/{{sousCategorie.image}}" alt="{{sousCategorie.image}}" width="200" height="200"/>
+        <ion-card-header (click)="redirectToProduitPage(sousCategorie.id)">
+          <ion-card-title>{{ sousCategorie.name }}</ion-card-title>
+    
+        </ion-card-header>
+      
+        <ion-card-content>
+        
+        </ion-card-content>
+      </ion-card></ion-col>
+   
+    </ion-row>
+  </ion-grid>
+
+
+</ion-content>
+

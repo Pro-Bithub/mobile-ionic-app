@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Service Apres Vente</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" style="background: url('../../assets/full-logo-horizontal.png') no-repeat center center fixed;
+-webkit-background-size: cover;
+-moz-background-size: cover;
+-o-background-size: cover;
+background-size: cover;">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Service Apres Vente</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Connectez-vous pour continuer</ion-card-title>
+
+      </ion-card-header>
+    
+      <ion-card-content>
+        <form #form="ngForm">
+          <ion-item>
+            <ion-label position="stacked">Nom d'utilisateur</ion-label>
+            <ion-input type="text" name="username" [(ngModel)]="username" required></ion-input>
+          </ion-item>
+      
+          <ion-item>
+            <ion-label position="stacked">Mot de passe</ion-label>
+            <ion-input type="password" name="password" [(ngModel)]="password" required></ion-input>
+          </ion-item>
+      
+          <ion-button expand="full" (click)="onSubmit(form)">Connexion</ion-button>
+        </form>
+      </ion-card-content>
+    </ion-card>
+
+ 
+  </ion-content>
+</ion-content>

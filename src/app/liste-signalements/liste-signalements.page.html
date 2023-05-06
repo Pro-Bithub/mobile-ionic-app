@@ -1,0 +1,65 @@
+<ion-header style="--background: #ff6600; --color: #fff;">
+  <ion-toolbar>
+    <ion-title>Liste des Signalements de Panne</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+ 
+    <input
+    type='text'
+    style='padding:8px;margin:15px auto;width:30%;'
+    placeholder='Entrez un mot-clé...'
+    (keyup)='filterByName($event)'
+  />
+
+    <ngx-datatable 
+    class="material"
+    [limit]="8" 
+    [headerHeight]="50" 
+    [footerHeight]="50"
+    [rowHeight]="50" 
+    [rows]="signalements" 
+    [columns]="columns"
+  >
+  
+    <ngx-datatable-footer>
+      <!-- Footer Template -->
+      <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-selectedCount="selectedCount"
+        let-curPage="curPage" let-offset="offset" let-isVisible="isVisible">
+        <div class="page-count">
+          <span *ngIf="selectedMessage">{{ selectedCount.toLocaleString() }} {{ selectedMessage }} /</span>
+          {{ rowCount.toLocaleString() }} {{ totalMessage }}
+        </div>
+  
+        <div class="controls">
+          <div>
+            <label for="per-page">Affichage par page:</label>
+            <select id="per-page" (change)="onLimitChange($event)">
+              <option *ngFor="let option of pageLimitOptions" [value]="option.value" [selected]="option.value == currentPageLimit">
+                {{ option.value }}
+              </option>
+            </select>
+          </div>
+        </div>
+  
+        <datatable-pager [pagerLeftArrowIcon]="'datatable-icon-left'" [pagerRightArrowIcon]="'datatable-icon-right'"
+          [pagerPreviousIcon]="'datatable-icon-prev'" [pagerNextIcon]="'datatable-icon-skip'" [page]="curPage"
+          [size]="pageSize" [count]="rowCount" [hidden]="!(rowCount / pageSize > 1)"
+          (change)="table.onFooterPage($event)">
+        </datatable-pager>
+      </ng-template>
+    </ngx-datatable-footer>
+  </ngx-datatable>
+  
+  </div>
+
+  
+  <div [ngSwitch]="true">
+    <ion-button *ngSwitchCase="hasPermission"  expand="full" (click)="ajouterSignalement()">Ajouter un Signalement</ion-button>
+ 
+    <ion-button *ngSwitchDefault>Aucune action autorisée</ion-button>
+  </div>
+
+</ion-content>

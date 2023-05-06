@@ -1,0 +1,54 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Inscription</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-header>
+      <ion-card-title>Inscrivez-vous</ion-card-title>
+    </ion-card-header>
+
+    <ion-card-content>
+      <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+        <ion-item>
+          <ion-label position="stacked">Nom</ion-label>
+          <ion-input type="text" formControlName="nom" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Prénom</ion-label>
+          <ion-input type="text" formControlName="prenom" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Numéro de téléphone</ion-label>
+          <ion-input type="tel" formControlName="telephone" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Adresse</ion-label>
+          <ion-input type="text" formControlName="adresse" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Nom d'utilisateur</ion-label>
+          <ion-input type="text" formControlName="username" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Mot de passe</ion-label>
+          <ion-input type="password" formControlName="password" required></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label position="stacked">Confirmer le mot de passe</ion-label>
+          <ion-input type="password" formControlName="confirmPassword" required></ion-input>
+        </ion-item>
+
+        <ion-button expand="full" type="submit">Inscription</ion-button>
+      </form>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
