@@ -16,10 +16,13 @@
         <ion-label position="stacked">Date panne</ion-label>
         <ion-datetime displayFormat="DD/MM/YYYY" formControlName="datePanne"></ion-datetime>
       </ion-item>
+      <ion-item>
+        <ion-label position="stacked">selectionez client </ion-label>
       <ion-select formControlName="clientName">
         <ion-select-option *ngFor="let client of clients" [value]="client">{{ client }}</ion-select-option>
       </ion-select>
       <ion-button (click)="addNewClient()">Ajouter un nouveau client</ion-button>
+    </ion-item>
       <ion-item>
         <ion-label position="stacked">Numéro de série du produit</ion-label>
         <ion-input type="text" formControlName="numSerie"></ion-input>
@@ -60,11 +63,22 @@
         <ion-label position="stacked">Observations</ion-label>
         <ion-textarea formControlName="observations"></ion-textarea>
       </ion-item>
+      <ion-item>
+    
+        <ion-button (click)="submitForm()"
+        expand="full"
+        fill="outline"
+        size="large"
+        shape="round">
+        Enregistrer
+    </ion-button>
+
+      </ion-item>
     </ion-list>
   
 
     
-    <ion-button expand="block" (click)="submitForm()">Enregistrer</ion-button>
+
 
 
 

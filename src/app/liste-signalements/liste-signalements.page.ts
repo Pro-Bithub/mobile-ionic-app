@@ -111,7 +111,7 @@ export class ListeSignalementsPage implements OnInit {
 }
 
   ngOnInit() {
-    this.hasPermission=this.permissionService.hasPermission()
+    this.hasPermission=localStorage.getItem('hasPrivilege')=== 'true'
   
     this.getSignalements();
   }
