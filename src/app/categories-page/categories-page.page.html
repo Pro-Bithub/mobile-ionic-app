@@ -39,17 +39,21 @@
   <ion-grid>
     <ion-row  >
     
-      <ion-col *ngFor="let sousCategorie of sousCategories | filterProducts:selectedFilter" size="4"> <ion-card>
-        <img  src="assets/product/{{sousCategorie.image}}" alt="{{sousCategorie.image}}" width="200" height="200"/>
-        <ion-card-header (click)="redirectToProduitPage(sousCategorie.id)">
-          <ion-card-title>{{ sousCategorie.name }}</ion-card-title>
-    
-        </ion-card-header>
-      
-        <ion-card-content>
-        
-        </ion-card-content>
-      </ion-card></ion-col>
+      <ng-container *ngIf="sousCategories.length > 0; else noSousCategories">
+        <ion-col *ngFor="let sousCategorie of sousCategories | filterProducts:selectedFilter" size="4"> 
+          <ion-card>
+            <img  src="assets/product/{{sousCategorie.image}}" alt="{{sousCategorie.image}}" width="200" height="200"/>
+            <ion-card-header (click)="redirectToProduitPage(sousCategorie.id)">
+              <ion-card-title>{{ sousCategorie.name }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ng-container>
+      <ng-template #noSousCategories>
+        <p>Aucune sous-catégorie trouvée.</p>
+      </ng-template>
    
     </ion-row>
   </ion-grid>

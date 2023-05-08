@@ -19,7 +19,7 @@
       <ion-item>
         <ion-label position="stacked">selectionez client </ion-label>
       <ion-select formControlName="clientName">
-        <ion-select-option *ngFor="let client of clients" [value]="client">{{ client }}</ion-select-option>
+        <ion-select-option *ngFor="let client of clients" [value]="client.id">{{ client.nom }} {{ client.prenom }}</ion-select-option>
       </ion-select>
       <ion-button (click)="addNewClient()">Ajouter un nouveau client</ion-button>
     </ion-item>

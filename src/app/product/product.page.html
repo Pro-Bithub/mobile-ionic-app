@@ -39,17 +39,24 @@
   <ion-grid>
     <ion-row  >
     
-      <ion-col *ngFor="let product of products | filterProducts:selectedFilter" size="4"> <ion-card>
-        <img alt="Silhouette of mountains" src="assets/product/{{product.image}}" alt="{{product.image}}" width="200" height="200"/>
-        <ion-card-header (click)="redirectToCategoriesPage(product.id)">
-          <ion-card-title>{{ product.name }}</ion-card-title>
-    
-        </ion-card-header>
+      <ng-container *ngIf="products && products.length > 0; else noProducts">
+        <ion-col *ngFor="let product of products | filterProducts:selectedFilter" size="4">
+          <ion-card>
+            <img alt="Silhouette of mountains" src="assets/product/{{product.image}}" alt="{{product.image}}" width="200" height="200"/>
+            <ion-card-header (click)="redirectToCategoriesPage(product.id)">
+              <ion-card-title>{{ product.name }}</ion-card-title>
+            </ion-card-header>
+            <ion-card-content>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ng-container>
       
-        <ion-card-content>
-        
-        </ion-card-content>
-      </ion-card></ion-col>
+      <ng-template #noProducts>
+        <div class="no-products">
+          <p>Aucun categorie trouvé.</p>
+        </div>
+      </ng-template>
    
     </ion-row>
   </ion-grid>

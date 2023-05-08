@@ -7,13 +7,14 @@ import { ProductService } from '../product/product.service';
 import { PermissionService } from '../permission.service';
 import { Router } from '@angular/router';
 import { DatatableComponent, NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-liste-signalements',
   templateUrl: './liste-signalements.page.html',
   styleUrls: ['./liste-signalements.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,NgxDatatableModule]
+  imports: [IonicModule, CommonModule, FormsModule,NgxDatatableModule,HttpClientModule]
 })
 export class ListeSignalementsPage implements OnInit {
   hasPermission:boolean=false;
@@ -63,7 +64,7 @@ export class ListeSignalementsPage implements OnInit {
   private changePageLimit(limit: any): void {
     this.currentPageLimit = parseInt(limit, 10);
   }
-  constructor( private alertController: AlertController, private permissionService: PermissionService,  private productService: ProductService, private router: Router) {
+  constructor(private http: HttpClient, private alertController: AlertController, private permissionService: PermissionService,  private productService: ProductService, private router: Router) {
     this.columns = [
       { name: 'datePanne' },
       { name: 'numSerie' },
@@ -116,9 +117,33 @@ export class ListeSignalementsPage implements OnInit {
     this.getSignalements();
   }
   getSignalements() {
-    this.productService.getAll().subscribe((data) => {
+    
+    if(localStorage.getItem('idclient')){
+      this.http.get<any[]>(this.productService.apiUrl+"/api/signalements/"+localStorage.getItem('idclient'), {})
+      .subscribe(data => {
+    
+        console.log("this.http.get");
+        console.log(data); // data received by server
+        this.signalements  = data;
+    
+      })
+    }else{
+      if( this.hasPermission){
+        this.http.get<any[]>(this.productService.apiUrl+"/api/signalements", {})
+        .subscribe(data => {
+      
+          console.log("this.http.get");
+          console.log(data); // data received by server
+          this.signalements  = data;
+      
+        })
+      }
+    }
+  
+
+ /*    this.productService.getAll().subscribe((data) => {
       this.signalements = data;
-    });
+    }); */
   }
   ajouterSignalement() {
     // Redirection vers la page du formulaire de signalement de panne
