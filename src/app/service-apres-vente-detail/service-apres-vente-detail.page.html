@@ -10,7 +10,7 @@
 
 <ion-content [fullscreen]="true">
  
-
+  <form [formGroup]="serviceForm">
     <ion-list>
       <ion-item>
         <ion-label position="stacked">Date panne</ion-label>
@@ -18,7 +18,7 @@
       </ion-item>
       <ion-item>
         <ion-label position="stacked">selectionez client </ion-label>
-      <ion-select formControlName="clientName">
+      <ion-select formControlName="idclient">
         <ion-select-option *ngFor="let client of clients" [value]="client.id">{{ client.nom }} {{ client.prenom }}</ion-select-option>
       </ion-select>
       <ion-button (click)="addNewClient()">Ajouter un nouveau client</ion-button>
@@ -41,7 +41,7 @@
       
       <ion-item>
         <ion-label>Etat de panne</ion-label>
-        <ion-radio-group formControlName="etatPanne">
+        <ion-radio-group formControlName="repare">
           <ion-item>
             <ion-label>Oui</ion-label>
             <ion-radio value="oui"></ion-radio>
@@ -75,7 +75,7 @@
 
       </ion-item>
     </ion-list>
-  
+  </form>
 
     
 
