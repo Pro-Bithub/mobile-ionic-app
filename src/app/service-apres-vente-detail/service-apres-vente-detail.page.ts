@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AlertController, IonicModule } from '@ionic/angular';
+import { AlertController, IonicModule, NavController, ToastController } from '@ionic/angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -38,15 +38,15 @@ export class ServiceApresVenteDetailPage implements OnInit {
   ];
   clients: any[]=[] ;
 
-  constructor(private http: HttpClient,private alertController: AlertController,private productService: ProductService,private formBuilder: FormBuilder,private barcodeScanner: BarcodeScanner) {
+  constructor( private toastCtrl: ToastController,private navCtrl: NavController,private http: HttpClient,private alertController: AlertController,private productService: ProductService,private formBuilder: FormBuilder,private barcodeScanner: BarcodeScanner) {
     this.serviceForm = this.formBuilder.group({
       datePanne: ['', Validators.required],
       numSerie: ['', Validators.required],
       typePanne: ['', Validators.required],
-      etatPanne: [false],
+      repare: [false],
       nomProduit: ['', Validators.required],
       observations: [''],
-      clientName: [''],
+      idclient: [''],
     });
   }
   async openAddClientDialog() {
@@ -145,9 +145,51 @@ export class ServiceApresVenteDetailPage implements OnInit {
   })
   }
 
-  submitForm() {
+  async submitForm() {
     console.log(this.serviceForm.value);
-    // Envoyer les données du formulaire au backend ici...
+    let typePannes = ""
+    let { datePanne, numSerie, typePanne, repare, nomProduit, observations, idclient } = this.serviceForm.value;
+    if(typePanne)
+     typePannes = this.serviceForm.value.typePanne.join(", "); // convert array to string
+     const Signalements = {
+      datePanne, numSerie,typePanne: typePannes, repare, nomProduit, observations, idclient
+     }
+
+     
+     try {
+      // Send a request to the server to verify the credentials
+  const response = await this.http.post<any>(this.productService.apiUrl + '/api/signalements',Signalements).toPromise();
+ 
+  if (response) {
+    const toast = await this.toastCtrl.create({
+      message: 'Signalement créé avec succès',
+      duration: 2000,
+      color: 'success'
+    });
+    await toast.present();
+    this.navCtrl.navigateForward('/liste-signalements');
+  } else {
+    const toast = await this.toastCtrl.create({
+      message: 'Erreur lors de la création du signalement',
+      duration: 2000,
+      color: 'danger'
+    });
+    await toast.present();
+  }
+
+
+  } catch (error) {
+   const toast = await this.toastCtrl.create({
+    message: 'Erreur lors de la création du signalement',
+    duration: 2000,
+    color: 'danger'
+  });
+  await toast.present();
+    // Handle error here, e.g. show error message to user
+  }
+
+
+
   }
   scanCode() {
     this.barcodeScanner.scan().then(barcodeData => {

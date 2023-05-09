@@ -24,6 +24,10 @@ export const routes: Routes = [
     loadComponent: () => import('./categories-page/categories-page.page').then( m => m.CategoriesPagePage)
   },
   {
+    path: 'product',
+    loadComponent: () => import('./product-page/product-page.page').then( m => m.ProductpagePage)
+  },
+  {
     path: 'connexion-client',
     loadComponent: () => import('./connexion-client/connexion-client.page').then( m => m.ConnexionClientPage)
   },
@@ -34,10 +38,6 @@ export const routes: Routes = [
   {
     path: 'register',
     loadComponent: () => import('./register-page/register-page.page').then( m => m.RegisterPagePage)
-  },
-  {
-    path: 'testcodebarre',
-    loadComponent: () => import('./testcodebarre/testcodebarre.page').then( m => m.Testcodebarre)
-  },
+  }
 
 ];

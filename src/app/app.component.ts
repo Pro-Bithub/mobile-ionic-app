@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PermissionService } from './permission.service';
 
@@ -13,16 +13,26 @@ import { PermissionService } from './permission.service';
 export class AppComponent {
   menuType: string = 'overlay';
 
-  constructor(public permissionService: PermissionService,private router: Router) {
+  constructor(private navCtrl: NavController,public permissionService: PermissionService,private router: Router) {
 
   }
   goToPage(page: string) {
     this.router.navigate([page]);
   }
-  disconnect() {
-     
-    this.  permissionService.disconnect();
-    this.  goToPage('categorie')
+ 
+  isLoggedIn(): boolean {
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+    return !!(username && password);
+  }
+
+  logout() {
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+    localStorage.removeItem('hasPrivilege');
+    localStorage.removeItem('idclient');
+   //  this.navCtrl.navigateForward('/liste-signalements');
+    this.goToPage('categorie')
   }
 
 

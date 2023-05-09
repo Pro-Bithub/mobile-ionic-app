@@ -7,8 +7,8 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class ProductService {
-  public apiUrl = 'http://localhost:8080';
-  private signalements: any[] = [
+  public apiUrl = 'http://192.168.1.15:8080';
+/*   private signalements: any[] = [
     { id: 1, datePanne: '2022-01-01', numSerie: 'ABC123', typePanne: 'Tête', repare: "OUI", nomProduit: 'Produit 1', observations: 'Observations du signalement 1' },
     { id: 2, datePanne: '2022-02-01', numSerie: 'DEF456', typePanne: 'Mandrin', repare: "NON", nomProduit: 'Produit 2', observations: 'Observations du signalement 2' },
     { id: 3, datePanne: '2022-03-01', numSerie: 'GHI789', typePanne: 'Autre', repare: "NON", nomProduit: 'Produit 3', observations: 'Observations du signalement 3' },
@@ -25,13 +25,13 @@ export class ProductService {
     { id: 2, datePanne: '2022-02-01', numSerie: 'DEF456', typePanne: 'Mandrin', repare: "NON", nomProduit: 'Produit 2', observations: 'Observations du signalement 2' },
     { id: 3, datePanne: '2022-03-01', numSerie: 'GHI789', typePanne: 'Autre', repare: "NON", nomProduit: 'Produit 3', observations: 'Observations du signalement 3' },
     // Ajoutez d'autres signalements au besoin
-  ];
+  ]; */
 
 
-  Categorie: Observable<Product[]>;
-  sousCategorie: Observable<Product[]>;
+/*   Categorie: Observable<Product[]>;
+  sousCategorie: Observable<Product[]>; */
   constructor(){
-    this.Categorie = of([
+  /*   this.Categorie = of([
       new Product(1, 'Terminaux Mobiles ', 'terminaux_mobiles.png', 10),
       new Product(2, 'Imprimantes Thermiques ', 'Imprimantes_thermiques.png', 20),
       new Product(3, 'Scanners code à barre', 'scanners_code_a_barre.png', 30),
@@ -43,8 +43,8 @@ export class ProductService {
       new Product(9, 'Consommables code à barre : Etiquettes et rubans', 'etiquettes_et_rubans.png', 90),
       new Product(10, 'Accessoires', 'accessoires.png', 100),
       new Product(11, 'Equipement Zebra fin de série', 'equipement_zebra_fin_de_serie.png', 110)
-]);
-this.sousCategorie = of([
+]); */
+/* this.sousCategorie = of([
   new Product(1, 'Terminaux tactiles avec clavier', 'terminaux_tactiles_avec_clavie.png', 1),
   new Product(2, 'Terminaux tactiles  ', 'terminaux_tactiles.png', 1),
   new Product(3, 'Wearables', 'wearables.png', 1),
@@ -80,13 +80,13 @@ this.sousCategorie = of([
   
   
   
-]);
+]); */
   }
-  getProducts(): Observable<any> {
+/*   getProducts(): Observable<any> {
     
     return this.Categorie;
-  }
-  getsousCategories(idcat: number): Observable<any> {
+  } */
+/*   getsousCategories(idcat: number): Observable<any> {
     return this.sousCategorie.pipe(
       map((products: Product[]) => {
         return products.filter((product: Product) => product.idcat === idcat);
@@ -95,7 +95,7 @@ this.sousCategorie = of([
   }
   getAll(): Observable<any[]> {
     return of(this.signalements);
-  }
+  } */
 
 }
  
