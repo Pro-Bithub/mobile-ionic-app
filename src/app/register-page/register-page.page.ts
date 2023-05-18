@@ -69,6 +69,12 @@ export class RegisterPagePage implements OnInit {
         // Logique d'inscription à implémenter ici
     // Vous pouvez accéder aux valeurs du formulaire via this.registerForm.value
 
+    localStorage.removeItem('username');
+    localStorage.removeItem('password');
+    localStorage.removeItem('hasPrivilege');
+    localStorage.removeItem('idclient');
+    
+
     localStorage.setItem('username',  this.registerForm.value.username);
     localStorage.setItem('password',this.registerForm.value.password);
     localStorage.setItem('hasPrivilege', false.toString());

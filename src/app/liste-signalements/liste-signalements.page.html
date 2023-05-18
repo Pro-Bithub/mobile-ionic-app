@@ -25,7 +25,7 @@
   >
   <ngx-datatable-column name="date panne">
     <ng-template ngx-datatable-cell-template let-row="row">
-      {{ row.datePanne }}
+      {{ row.datePanne | date: 'dd/MM/yyyy HH:mm:ss' }}
     </ng-template>
   </ngx-datatable-column>
   <ngx-datatable-column name="Num serie">

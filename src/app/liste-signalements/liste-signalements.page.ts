@@ -1,5 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, OnChanges, OnInit, ViewChild } from '@angular/core';
+import { CommonModule, DatePipe } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { AlertController, IonicModule, NavController } from '@ionic/angular';
 
@@ -14,7 +14,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
   templateUrl: './liste-signalements.page.html',
   styleUrls: ['./liste-signalements.page.scss'],
   standalone: true,
-  imports: [IonicModule, CommonModule, FormsModule,NgxDatatableModule,HttpClientModule]
+  imports: [IonicModule, CommonModule, FormsModule,NgxDatatableModule,HttpClientModule] , providers: [DatePipe],
 })
 export class ListeSignalementsPage implements OnInit {
   hasPermission:boolean=false;
@@ -40,23 +40,7 @@ export class ListeSignalementsPage implements OnInit {
     {value: 5},
     {value: 10},
   ];
-  // TODO[Dmitry Teplov] wrap dynamic limit in a separate component.
-  public onLimitChange(limit: any): void {
-    this.changePageLimit(limit.target.value);
-    this.table.limit = this.currentPageLimit;
-    this.table.recalculate();
-    setTimeout(() => {
-      console.log('444')
-      if (this.table.bodyComponent.temp.length <= 0) {
-        // TODO[Dmitry Teplov] find a better way.
-        // TODO[Dmitry Teplov] test with server-side paging.
-        if (this.table && this.table.limit!=null) {
-          this.table.offset = Math.floor((this.table.rowCount - 1) / this.table.limit);
-        }
-        // this.table.offset = 0;
-      }
-    });
-  }
+
   public onVisibleChange(visible: any): void {
     this.currentVisible = parseInt(visible, 10);
   }
@@ -64,7 +48,7 @@ export class ListeSignalementsPage implements OnInit {
   private changePageLimit(limit: any): void {
     this.currentPageLimit = parseInt(limit, 10);
   }
-  constructor(private http: HttpClient, private alertController: AlertController, private permissionService: PermissionService,  private productService: ProductService, private router: Router) {
+  constructor(private datePipe: DatePipe,private http: HttpClient, private alertController: AlertController, private permissionService: PermissionService,  private productService: ProductService, private router: Router) {
     this.columns = [
       { name: 'datePanne' },
       { name: 'numSerie' },
@@ -94,11 +78,12 @@ export class ListeSignalementsPage implements OnInit {
    
   }
   async afficheAlert(row:any){
+    const formattedDatePanne = this.datePipe.transform(row.datePanne, 'yyyy-MM-dd HH:mm:ss');
 
     const alert = await this.alertController.create({
       header: 'Panne details',
       subHeader: 'Détails de la panne sélectionnée',
-      message: "Date Panne: " + row.datePanne + "\n" +
+      message: "Date Panne: " + formattedDatePanne + "\n" +
                "Num Serie: " + row.numSerie + "\n" +
                "Type Panne: " + row.typePanne + "\n" +
                "Réparé: " + row.repare + "\n" +
@@ -112,12 +97,21 @@ export class ListeSignalementsPage implements OnInit {
 }
 
   ngOnInit() {
+
+  }
+
+  ionViewDidEnter() {
+    // Code to be executed when the page has fully entered and is now the active page
+    console.log('Liste Signalements Page entered!');
+    
+    // Perform any necessary updates or actions here
     this.hasPermission=localStorage.getItem('hasPrivilege')=== 'true'
   
     this.getSignalements();
   }
+
   getSignalements() {
-    
+
     if(localStorage.getItem('idclient')){
       this.http.get<any[]>(this.productService.apiUrl+"/api/signalements/"+localStorage.getItem('idclient'), {})
       .subscribe(data => {
@@ -149,4 +143,23 @@ export class ListeSignalementsPage implements OnInit {
     // Redirection vers la page du formulaire de signalement de panne
     this.router.navigate(['/formulaire-signalement-panne']);
   }
+
+    // TODO[Dmitry Teplov] wrap dynamic limit in a separate component.
+    public onLimitChange(limit: any): void {
+      this.changePageLimit(limit.target.value);
+      this.table.limit = this.currentPageLimit;
+      this.table.recalculate();
+      setTimeout(() => {
+        console.log('444')
+        if (this.table.bodyComponent.temp.length <= 0) {
+          // TODO[Dmitry Teplov] find a better way.
+          // TODO[Dmitry Teplov] test with server-side paging.
+          if (this.table && this.table.limit!=null) {
+            this.table.offset = Math.floor((this.table.rowCount - 1) / this.table.limit);
+          }
+          // this.table.offset = 0;
+        }
+      });
+    }
+
 }

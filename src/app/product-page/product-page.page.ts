@@ -33,11 +33,16 @@ export class ProductpagePage implements OnInit {
   }
   
   async affiche_details(product:any) {
+   let caracteristiques=""
+   if(product.caracteristiques!=null){
+    caracteristiques=product.caracteristiques
+   }
     const alert = await this.alertController.create({
       header: 'détails du produit',
       subHeader: product.title,
       message:  `
-      ${product.description}
+      Description : ${product.description}
+      Caractéristiques : ${product.caracteristiques}
     `,
       buttons: ['OK'],
     });
