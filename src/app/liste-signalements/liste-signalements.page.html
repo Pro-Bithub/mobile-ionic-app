@@ -17,9 +17,7 @@
     <ngx-datatable 
     class="material"
     [limit]="8" 
-    [headerHeight]="20" 
-    [footerHeight]="20"
-    [rowHeight]="20" 
+  
     [rows]="signalements" 
     [columns]="columns"
   >
@@ -36,10 +34,19 @@
 
   <ngx-datatable-column name="Actions">
     <ng-template ngx-datatable-cell-template let-row="row">
-      <button  (click)="afficheAlert(row)" >détails</button>
+      <button class="btn btn-primary" (click)="afficheAlert(row)">
+        <i class="fa fa-info-circle"></i> Détails
+      </button>
+     
+      <button class="btn btn-warning " (click)="editer(row)">
+        <i class="fa fa-pencil"></i> Éditer
+      </button>
+      <button class="btn btn-danger " (click)="supprimer(row)">
+        <i class="fa fa-trash"></i> Supprimer
+      </button>
     </ng-template>
   </ngx-datatable-column>
-
+  
     <ngx-datatable-footer>
       <!-- Footer Template -->
       <ng-template ngx-datatable-footer-template let-rowCount="rowCount" let-selectedCount="selectedCount"

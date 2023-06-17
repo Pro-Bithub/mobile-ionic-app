@@ -16,9 +16,11 @@ export const routes: Routes = [
     loadComponent: () => import('./service-apres-vente/service-apres-vente.page').then( m => m.ServiceApresVentePage)
   },
   {
-    path: 'formulaire-signalement-panne',
+    path: 'formulaire-signalement-panne/:id',
     loadComponent: () => import('./service-apres-vente-detail/service-apres-vente-detail.page').then( m => m.ServiceApresVenteDetailPage)
-  },
+  }
+
+  ,
   {
     path: 'categories',
     loadComponent: () => import('./categories-page/categories-page.page').then( m => m.CategoriesPagePage)

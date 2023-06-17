@@ -6,6 +6,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BarcodeScanner } from '@awesome-cordova-plugins/barcode-scanner/ngx';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { ProductService } from '../product/product.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-service-apres-vente-detail',
   templateUrl: './service-apres-vente-detail.page.html',
@@ -37,8 +38,10 @@ export class ServiceApresVenteDetailPage implements OnInit {
     { label: 'nettoyage capteur ruban', value: 'nettoyageCapteur' }
   ];
   clients: any[]=[] ;
+ 
 
-  constructor( private toastCtrl: ToastController,private navCtrl: NavController,private http: HttpClient,private alertController: AlertController,private productService: ProductService,private formBuilder: FormBuilder,private barcodeScanner: BarcodeScanner) {
+  constructor(    private route: ActivatedRoute,
+    private toastCtrl: ToastController,private navCtrl: NavController,private http: HttpClient,private alertController: AlertController,private productService: ProductService,private formBuilder: FormBuilder,private barcodeScanner: BarcodeScanner) {
     this.serviceForm = this.formBuilder.group({
       datePanne: ['', Validators.required],
       numSerie: ['', Validators.required],
@@ -132,7 +135,41 @@ export class ServiceApresVenteDetailPage implements OnInit {
   }
     
   ngOnInit() {
+    console.log("ngOnInit")
+    const id = this.route.snapshot.paramMap.get('id');
+  console.log(id); // Output the value of the 'id' parameter
+if(id!="0"){
+ this.loadDataToEdit(id)
+}
+
+
     this.getclients()
+  }
+
+  selectedTypePanne: string[] = ['kitAssembly', 'calibrage']; // Example values
+
+
+
+  loadDataToEdit(rowId: any) {
+    // Effectuer une requête pour récupérer les données de la ligne à éditer à partir de l'ID
+    this.http.get<any>(`${this.productService.apiUrl}/api/signalements/${rowId}`).subscribe(data => {
+      // Pré-remplir le formulaire avec les données récupérées
+      this.serviceForm.patchValue({
+        datePanne: data[0].datePanne,
+        numSerie: data[0].numSerie,
+        typePanne: data[0].typePanne,
+        repare: data[0].repare,
+        nomProduit: data[0].nomProduit,
+        observations: data[0].observations,
+        idclient: data[0].idclient,
+      });
+      // Set the selected types
+
+      // Set the selected value for repare
+      const repareValue = data[0]?.repare;
+      this.serviceForm.get('repare')?.setValue(repareValue);
+     
+    });
   }
 
   getclients() {

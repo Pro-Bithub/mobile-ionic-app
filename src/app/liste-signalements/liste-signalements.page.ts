@@ -109,6 +109,44 @@ export class ListeSignalementsPage implements OnInit {
   
     this.getSignalements();
   }
+  async supprimer(row: any) {
+    const alert = await this.alertController.create({
+      header: 'Confirmation',
+      message: 'Voulez-vous vraiment supprimer ce signalement ?',
+      buttons: [
+        {
+          text: 'Annuler',
+          role: 'cancel',
+          handler: () => {
+            // Action à effectuer lorsque l'utilisateur clique sur "Annuler"
+          }
+        },
+        {
+          text: 'Supprimer',
+          handler: () => {
+            // Logique de suppression du signalement en utilisant this.http
+            this.http.delete(`${this.productService.apiUrl}/api/signalements/${row.id}`).subscribe(() => {
+ this.getSignalements();
+
+}, (error) => {
+              // Gestion des erreurs lors de la suppression
+            });
+          }
+        }
+      ]
+    });
+  
+    await alert.present();
+  }
+  
+  editer(row: any) {
+    // Naviguer vers la page de formulaire d'édition avec les paramètres appropriés
+  /* this.router.navigate(['/formulaire-signalement-panne/'+ row.id ]); */
+
+  this.router.navigate(['/formulaire-signalement-panne', row.id]);
+
+
+  }
 
   getSignalements() {
 
@@ -141,7 +179,7 @@ export class ListeSignalementsPage implements OnInit {
   }
   ajouterSignalement() {
     // Redirection vers la page du formulaire de signalement de panne
-    this.router.navigate(['/formulaire-signalement-panne']);
+    this.router.navigate(['/formulaire-signalement-panne/0']);
   }
 
     // TODO[Dmitry Teplov] wrap dynamic limit in a separate component.

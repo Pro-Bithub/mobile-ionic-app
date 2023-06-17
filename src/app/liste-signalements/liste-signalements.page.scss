@@ -1,3 +1,22 @@
 /* @import '~@swimlane/ngx-datatable/index.css';
 @import '~@swimlane/ngx-datatable/themes/material.scss';
 @import '~@swimlane/ngx-datatable/assets/icons.css'; */
+
+.btn-details {
+    background-color: blue;
+    color: white;
+    padding: 6px;
+  }
+  
+  .btn-supprimer {
+    background-color: red;
+    color: white;
+    padding: 6px;
+  }
+  
+  .btn-editer {
+    background-color: orange;
+    color: white;
+    padding: 6px;
+  }
+  
