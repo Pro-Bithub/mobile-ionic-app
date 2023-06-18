@@ -34,14 +34,14 @@
 
   <ngx-datatable-column name="Actions">
     <ng-template ngx-datatable-cell-template let-row="row">
-      <button class="btn btn-primary" (click)="afficheAlert(row)">
+      <button class="btn btn-primary  action-button" (click)="afficheAlert(row)">
         <i class="fa fa-info-circle"></i> Détails
       </button>
      
-      <button class="btn btn-warning " (click)="editer(row)">
+      <button class="btn btn-warning  action-button" (click)="editer(row)"  *ngIf="isLoggedAdminIn()" >
         <i class="fa fa-pencil"></i> Éditer
       </button>
-      <button class="btn btn-danger " (click)="supprimer(row)">
+      <button class="btn btn-danger  action-button" (click)="supprimer(row)"  *ngIf="isLoggedAdminIn()" >
         <i class="fa fa-trash"></i> Supprimer
       </button>
     </ng-template>

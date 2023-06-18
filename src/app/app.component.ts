@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { IonicModule, NavController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { PermissionService } from './permission.service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
   standalone: true,
-  imports: [IonicModule],
+  imports: [IonicModule,CommonModule],
 })
 export class AppComponent {
   menuType: string = 'overlay';
@@ -20,10 +21,14 @@ export class AppComponent {
     this.router.navigate([page]);
   }
  
-  isLoggedIn(): boolean {
+  isLoggedAdminIn(): boolean {
     const username = localStorage.getItem('username');
     const password = localStorage.getItem('password');
-    return !!(username && password);
+    return !!(username === 'admin' && password === 'admin');
+  }
+  isLoggedIn(): boolean {
+    const username = localStorage.getItem('username');
+    return !!(username );
   }
 
   logout() {

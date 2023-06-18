@@ -147,7 +147,12 @@ export class ListeSignalementsPage implements OnInit {
 
 
   }
-
+ 
+  isLoggedAdminIn(): boolean {
+    const username = localStorage.getItem('username');
+    const password = localStorage.getItem('password');
+    return !!(username === 'admin' && password === 'admin');
+  }
   getSignalements() {
 
     if(localStorage.getItem('idclient')){

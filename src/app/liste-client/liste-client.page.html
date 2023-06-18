@@ -1,0 +1,57 @@
+<ion-header style="--background: #ff6600; --color: #fff;">
+  <ion-toolbar>
+    <ion-title>Liste des Clients</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="ion-padding">
+    <input
+      type="text"
+      style="padding: 8px; margin: 15px auto; width: 30%;"
+      placeholder="Entrez un mot-clé..."
+      (keyup)="filterByName($event)"
+    />
+
+    <ngx-datatable class="material" [limit]="8" [rows]="Clients" [columns]="columns">
+      <ngx-datatable-column name="nom">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          {{ row.nom }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="prenom">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          {{ row.prenom }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="telephone">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          {{ row.telephone }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="adresse">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          {{ row.adresse | slice:0:15 }}{{ row.adresse.length > 15 ? '...' : '' }}
+        </ng-template>
+      </ngx-datatable-column>
+      <ngx-datatable-column name="Actions">
+        <ng-template ngx-datatable-cell-template let-row="row">
+          <button class="btn btn-primary action-button" (click)="afficheAlert(row)">
+            <i class="fa fa-info-circle "></i> Détails
+          </button>
+          <button class="btn btn-warning action-button" (click)="modify(row)" >
+            <i class="fa fa-pencil"></i> Éditer
+          </button>
+          <button class="btn btn-danger action-button" (click)="supprimer(row)" >
+            <i class="fa fa-trash"></i> Supprimer
+          </button>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+
+    <div [ngSwitch]="hasPermission">
+      <ion-button *ngSwitchCase="true" expand="full" (click)="ajouterClient()">Ajouter un Client</ion-button>
+      <ion-button *ngSwitchDefault>Aucune action autorisée</ion-button>
+    </div>
+  </div>
+</ion-content>

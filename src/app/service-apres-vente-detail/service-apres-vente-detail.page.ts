@@ -163,10 +163,30 @@ if(id!="0"){
         observations: data[0].observations,
         idclient: data[0].idclient,
       });
+
+  // Divisez la chaîne de caractères en utilisant la virgule comme séparateur pour obtenir un tableau de valeurs
+  const preselectedValues = data[0].typePanne.split(',').map((value: string) => value.trim());
+
+  // Parcourez les valeurs pré-sélectionnées de `typePanne`
+  for (const value of preselectedValues) {
+    // Recherchez l'option correspondante dans `typesPanne` en utilisant la valeur
+    const selectedOption = this.typesPanne.find(type => type.value === value);
+    
+    // Si une option correspondante est trouvée, ajoutez-la à `selectedTypePanne`
+    if (selectedOption) {
+      this.selectedTypePanne.push(selectedOption);
+    }
+  }
+  console.log(" this.selectedTypePanne")
+console.log( this.selectedTypePanne)
       // Set the selected types
 
       // Set the selected value for repare
-      const repareValue = data[0]?.repare;
+      let repareValue ="encours" ;
+      if(data[0]?.repare==1)
+      repareValue="oui"
+      else
+      repareValue="non"
       this.serviceForm.get('repare')?.setValue(repareValue);
      
     });

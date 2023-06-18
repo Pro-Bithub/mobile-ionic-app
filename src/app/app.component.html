@@ -17,8 +17,13 @@
         <ion-item (click)="goToPage('service-apres-vente')">
           <ion-label>Service après vente</ion-label>
         </ion-item>
-        <ion-item (click)="goToPage('connexion-client')">
-          <ion-label>connexion client</ion-label>
+
+        <ion-item (click)="goToPage('liste-client')"  *ngIf="isLoggedAdminIn()"  >
+          <ion-label>Client</ion-label>
+        </ion-item>
+
+        <ion-item (click)="goToPage('connexion-client')" *ngIf="!isLoggedAdminIn()">
+          <ion-label>Connexion client</ion-label>
         </ion-item>
       
    
@@ -29,7 +34,7 @@
       </ion-list>
       <ion-menu-toggle>
 
-        <ion-button  (click)="logout()">Déconnexion</ion-button>
+        <ion-button  (click)="logout()"  *ngIf="isLoggedIn()" >Déconnexion</ion-button>
       </ion-menu-toggle>
     </ion-content>
   </ion-menu>
