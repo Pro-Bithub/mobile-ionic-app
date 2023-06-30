@@ -18,9 +18,7 @@ export const routes: Routes = [
   {
     path: 'formulaire-signalement-panne/:id',
     loadComponent: () => import('./service-apres-vente-detail/service-apres-vente-detail.page').then( m => m.ServiceApresVenteDetailPage)
-  }
-
-  ,
+  },
   {
     path: 'categories',
     loadComponent: () => import('./categories-page/categories-page.page').then( m => m.CategoriesPagePage)
@@ -49,6 +47,9 @@ export const routes: Routes = [
     path: 'accueil',
     loadComponent: () => import('./accueil/accueil.page').then( m => m.AccueilPage)
   },
-  
+  {
+    path: 'Statistique',
+    loadComponent: () => import('./statistique/statistique.page').then( m => m.StatistiquePage)
+  },
 
 ];

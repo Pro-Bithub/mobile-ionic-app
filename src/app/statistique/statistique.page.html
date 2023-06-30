@@ -1,0 +1,24 @@
+
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/liste-signalements"></ion-back-button>
+    </ion-buttons>
+    <ion-title size="large">Statistique</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+ 
+
+  <h1>Nombre de clients : {{ clientCount }}</h1>
+<h1>Nombre de pannes : {{ panneCount }}</h1>
+<h1>Noms des clients ayant signalé 10 pannes ou plus :</h1>
+<ul>
+  <li *ngFor="let client of clientsWith10Pannes">{{ client.nom }} {{ client.prenom }}</li>
+</ul>
+
+
+
+  
+</ion-content>
